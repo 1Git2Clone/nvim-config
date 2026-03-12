@@ -1,4 +1,5 @@
-README*
-LICENSE*
+README.md
+LICENSE.md
 
-\.git*
+.git*
+stow_setup.sh
