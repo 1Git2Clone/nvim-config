@@ -24,41 +24,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "clangd",
-          "rust_analyzer",
-          "lua_ls",
-          "svelte",
-          "astro",
-          "phpactor",
-          "gopls",
-          "bashls",
-          "dockerls",
-          "yamlls",
-          "jsonls",
-          "texlab",
-        },
-      })
-    end,
-  },
-
-  {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    dependencies = "mason-org/mason.nvim",
-    config = function()
-      require("mason-tool-installer").setup({
-        ensure_installed = {
-          "stylua",
-          "clang-format",
-          "rustfmt",
-          "gofumpt",
-          "shfmt",
-          "prettier",
-          "php-cs-fixer",
-          "latexindent",
-          "markdownlint",
-          "shellcheck",
-          "jsonlint",
-          "yamllint",
+          -- Add packages here
         },
       })
     end,
