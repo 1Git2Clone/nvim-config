@@ -1,28 +1,24 @@
+-- In ~/.config/nvim/lua/plugins/telescope.lua
 return {
-  'nvim-telescope/telescope.nvim',
-  event = 'VimEnter',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    'nvim-telescope/telescope-ui-select.nvim',
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = {
+      defaults = {},
+    },
+    config = function(_, opts)
+      require("telescope").setup(opts)
+
+      local colors = require("utils.colors")
+
+      vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = colors.default_bg })
+      vim.api.nvim_set_hl(0, "TelescopeBorder", colors.default_fg_bg)
+      vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = colors.default_bg })
+      vim.api.nvim_set_hl(0, "TelescopePromptBorder", colors.default_fg_bg)
+      vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = colors.default_bg })
+      vim.api.nvim_set_hl(0, "TelescopeResultsBorder", colors.default_fg_bg)
+      vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = colors.default_bg })
+      vim.api.nvim_set_hl(0, "TelescopePreviewBorder", colors.default_fg_bg)
+      vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = colors.hl_col, bold = true })
+    end,
   },
-  config = function()
-    local telescope = require 'telescope'
-
-    telescope.setup {
-      extensions = {
-        ['ui-select'] = require('telescope.themes').get_dropdown(),
-      },
-    }
-
-    telescope.load_extension 'fzf'
-    telescope.load_extension 'ui-select'
-
-    local builtin = require 'telescope.builtin'
-
-    vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-    vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers' })
-    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-  end,
 }

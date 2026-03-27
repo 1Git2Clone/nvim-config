@@ -2,29 +2,29 @@
 ---@type LazySpec
 return {
   {
-    'neovim/nvim-lspconfig',
+    "neovim/nvim-lspconfig",
     dependencies = {
-      'mason-org/mason.nvim',
-      'mason-org/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      'j-hui/fidget.nvim',
+      "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      "j-hui/fidget.nvim",
     },
     config = function()
-      local mason_installer = require 'mason-tool-installer'
+      local mason_installer = require("mason-tool-installer")
 
       local servers = {
         clangd = {},
         lua_ls = {
           settings = {
             Lua = {
-              runtime = { version = 'LuaJIT' },
+              runtime = { version = "LuaJIT" },
               workspace = {
                 checkThirdParty = false,
                 library = {
                   vim.env.VIMRUNTIME,
                 },
               },
-              completion = { callSnippet = 'Replace' },
+              completion = { callSnippet = "Replace" },
               telemetry = { enabled = false },
             },
           },
@@ -42,9 +42,9 @@ return {
         jedi_language_server = {},
       }
 
-      mason_installer.setup {
+      mason_installer.setup({
         ensure_installed = vim.tbl_keys(servers),
-      }
+      })
 
       for name, opts in pairs(servers) do
         vim.lsp.config(name, opts or {})

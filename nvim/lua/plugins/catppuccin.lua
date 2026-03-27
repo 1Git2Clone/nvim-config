@@ -1,28 +1,28 @@
-local colors = require 'utils.colors'
+local colors = require("utils.colors")
 
 return {
   {
-    'catppuccin/nvim',
+    "catppuccin/nvim",
     lazy = false,
-    name = 'catppuccin',
+    name = "catppuccin",
     styles = {
-      functions = { 'bold' },
+      functions = { "bold" },
     },
     opts = {
       color_overrides = {
         all = {
-          text     = '#f7c0c8',
-          subtext1 = '#e6aab3',
-          subtext0 = '#d4939d',
-          overlay2 = '#c17c87',
-          overlay1 = '#ab6670',
-          overlay0 = '#965159',
-          surface2 = '#7f3e44',
-          surface1 = '#6a2f36',
-          surface0 = '#541f27',
-          base     = colors.catppuccin.base,
-          mantle   = colors.catppuccin.mantle,
-          crust    = colors.catppuccin.crust,
+          text = "#f7c0c8",
+          subtext1 = "#e6aab3",
+          subtext0 = "#d4939d",
+          overlay2 = "#c17c87",
+          overlay1 = "#ab6670",
+          overlay0 = "#965159",
+          surface2 = "#7f3e44",
+          surface1 = "#6a2f36",
+          surface0 = "#541f27",
+          base = colors.catppuccin.base,
+          mantle = colors.catppuccin.mantle,
+          crust = colors.catppuccin.crust,
         },
       },
       background = { light = "latte", dark = "mocha" },
@@ -45,6 +45,16 @@ return {
             NvimTreeNormalNC = { bg = colors.default_bg },
             NvimTreeWinSeparator = { fg = colors.default_bg, bg = colors.default_bg },
 
+            NeoTreeNormal = { bg = colors.default_bg },
+            NeoTreeNormalNC = { bg = colors.default_bg },
+            NeoTreeWinSeparator = { fg = colors.default_bg, bg = colors.default_bg },
+            NeoTreeRootName = { fg = colors.default_fg, bold = true },
+            NeoTreeDirectoryIcon = { fg = colors.default_fg },
+            NeoTreeDirectoryName = { fg = colors.default_fg },
+            NeoTreeFileName = { fg = colors.default_fg },
+            NeoTreeFileNameOpened = { fg = colors.default_fg },
+            NeoTreeExpander = { fg = colors.default_fg },
+
             -- Telescope
             TelescopeNormal = { bg = colors.default_bg },
             TelescopeBorder = colors.default_fg_bg,
@@ -66,10 +76,43 @@ return {
             SnacksNormalNC = { bg = colors.default_bg },
             TerminalNormal = { bg = colors.default_bg },
             SnacksTerminalBorder = colors.default_fg_bg,
+            SnacksWin = { bg = colors.default_bg },
+            SnacksWinBorder = colors.default_fg_bg,
+            SnacksNotifier = { bg = colors.default_bg },
+            SnacksNotifierBorder = colors.default_fg_bg,
+            SnacksInputBorder = colors.default_fg_bg,
+            -- Float windows (used by snacks notification history)
+            FloatBorder = colors.default_fg_bg,
+
+            -- Snacks Picker
+            SnacksPicker = { bg = colors.default_bg },
+            SnacksPickerBorder = colors.default_fg_bg,
+            SnacksPickerTitle = { fg = colors.default_fg },
+            SnacksPickerInput = { fg = colors.hl_col, bg = colors.default_bg },
+            SnacksPickerInputBorder = colors.default_fg_bg,
+            SnacksPickerList = { bg = colors.default_bg },
+            SnacksPickerListBorder = colors.default_fg_bg,
+            SnacksPickerListCursor = { fg = colors.hl_col, bg = colors.default_bg },
+            SnacksPickerListCurrent = { fg = colors.default_fg, bg = colors.surface0 or "#541f27" },
+            SnacksPickerMatch = { fg = colors.hl_col, bold = true },
+            -- Level-specific snacks notifier borders
+            SnacksNotifierBorderTrace = colors.default_fg_bg,
+            SnacksNotifierBorderDebug = colors.default_fg_bg,
+            SnacksNotifierBorderInfo = colors.default_fg_bg,
+            SnacksNotifierBorderWarn = colors.default_fg_bg,
+            SnacksNotifierBorderError = colors.default_fg_bg,
+
+            -- Noice
+            NoicePopup = { bg = colors.default_bg },
+            NoicePopupBorder = colors.default_fg_bg,
+            NoiceConfirm = { bg = colors.default_bg },
+            NoiceConfirmBorder = colors.default_fg_bg,
+            NoiceCmdlinePopup = { bg = colors.default_bg },
+            NoiceCmdlinePopupBorder = colors.default_fg_bg,
 
             -- LSP / Treesitter
-            ['@lsp.type.namespace'] = { fg = colors.module_col },
-            ['@lsp.type.enumMember'] = { fg = colors.enum_member_col },
+            ["@lsp.type.namespace"] = { fg = colors.module_col },
+            ["@lsp.type.enumMember"] = { fg = colors.enum_member_col },
 
             -- NvimTree
             NvimTreeRootFolder = { fg = colors.default_fg },
@@ -80,20 +123,34 @@ return {
             NvimTreeHighlights = { fg = colors.default_fg },
           }
           local fg_only_groups = {
-            "Directory", "MoreMsg", "Question", "Title", "Folded", "Function",
-            "Conditional", "Statement", "Repeat", "Keyword", "Exception", "Include", "Macro" }
+            "Directory",
+            "MoreMsg",
+            "Question",
+            "Title",
+            "Folded",
+            "Function",
+            "Conditional",
+            "Statement",
+            "Repeat",
+            "Keyword",
+            "Exception",
+            "Include",
+            "Macro",
+          }
           for _, group in ipairs(fg_only_groups) do
             highlights[group] = { fg = colors.default_fg }
           end
 
-          for _, group in ipairs(vim.fn.getcompletion('', 'highlight')) do
-            if group:match("^Neogit") or
-                group:match("^NvimTree") or
-                group:match("^NeoTree") or
-                group:match("^DapUI") or
-                group:match("^NotifyINFO") or
-                group:match("^Neotest") or
-                group:match("^RainbowDelimiter") then
+          for _, group in ipairs(vim.fn.getcompletion("", "highlight")) do
+            if
+              group:match("^Neogit")
+              or group:match("^NvimTree")
+              or group:match("^NeoTree")
+              or group:match("^DapUI")
+              or group:match("^NotifyINFO")
+              or group:match("^Neotest")
+              or group:match("^RainbowDelimiter")
+            then
               highlights[group] = { fg = colors.default_fg }
             end
           end
@@ -126,14 +183,14 @@ return {
         indent_blankline = { enabled = true },
         native_lsp = {
           enabled = true,
-          underlines = { errors = { 'undercurl' }, hints = { 'undercurl' }, warnings = { 'undercurl' } },
+          underlines = { errors = { "undercurl" }, hints = { "undercurl" }, warnings = { "undercurl" } },
         },
-        navic = { enabled = true, custom_bg = 'lualine' },
+        navic = { enabled = true, custom_bg = "lualine" },
       },
     },
     config = function(_, opts)
-      require('catppuccin').setup(opts)
-      vim.cmd.colorscheme 'catppuccin'
+      require("catppuccin").setup(opts)
+      vim.cmd.colorscheme("catppuccin")
     end,
   },
 }
