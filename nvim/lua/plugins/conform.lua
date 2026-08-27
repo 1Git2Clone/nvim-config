@@ -34,6 +34,11 @@ return {
         tex = { "latexindent" },
         -- Added TOML (Common in Rust/Python)
         toml = { "taplo" },
+        nixpkgs_fmt = {
+          command = "nixpkgs-fmt",
+          args = { "-" },
+          stdin = true,
+        },
       },
       -- format_on_save = {
       --   timeout_ms = 1000, -- Increased timeout for heavier formatters

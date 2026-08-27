@@ -40,10 +40,17 @@ return {
         texlab = {},
         pyright = {},
         jedi_language_server = {},
+        nixd = {},
       }
 
+      -- Filter out nixd from Mason install list because Mason doesn't have it
+      local server_names = vim.tbl_keys(servers)
+      local mason_servers = vim.tbl_filter(function(name)
+        return name ~= "nixd" -- unicorn case yea. Get your own with: `nix profile add nixpkgs#nixd`
+      end, server_names)
+
       mason_installer.setup({
-        ensure_installed = vim.tbl_keys(servers),
+        ensure_installed = mason_servers,
       })
 
       for name, opts in pairs(servers) do
