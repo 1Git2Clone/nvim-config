@@ -1,3 +1,5 @@
+local nix = require("utils.nix")
+
 ---@module "lazy"
 ---@type LazySpec
 return {
@@ -40,14 +42,25 @@ return {
         texlab = {},
         pyright = {},
         jedi_language_server = {},
-        nixd = {},
+        nixd = {
+          cmd = { "nixd" },
+          settings = {
+            nixd = {
+              nixpkgs = {
+                expr = "import <nixpkgs> { }",
+              },
+              options = {
+                nixos = {
+                  expr = nix.get_nixos_expr(),
+                },
+              },
+            },
+          },
+        },
       }
-
-      -- Filter out nixd from Mason install list because Mason doesn't have it
-      local server_names = vim.tbl_keys(servers)
       local mason_servers = vim.tbl_filter(function(name)
-        return name ~= "nixd" -- unicorn case yea. Get your own with: `nix profile add nixpkgs#nixd`
-      end, server_names)
+        return name ~= "nixd"
+      end, vim.tbl_keys(servers))
 
       mason_installer.setup({
         ensure_installed = mason_servers,
